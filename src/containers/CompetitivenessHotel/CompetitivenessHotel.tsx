@@ -4,6 +4,8 @@ import { PriceDataType } from 'model/price.model';
 import { currencyAtom } from 'store/currencyAtom';
 import { orderTagAtom } from 'store/orderTagAtom';
 
+import { useCallback } from 'react';
+
 import { Card, Col, Empty, Row, Spin } from 'antd';
 import { useAtom } from 'jotai';
 import lodash from 'lodash';
@@ -35,7 +37,7 @@ const CompetitivenessHotel = () => {
     },
   );
 
-  const renderListHotel = () => {
+  const renderListHotel = useCallback(() => {
     if (isFetched && lodash.isEmpty(listInfoHotel)) {
       return <Empty />;
     }
@@ -52,13 +54,13 @@ const CompetitivenessHotel = () => {
       `${orderTag.direction}`,
     );
 
-    const result = orderedListHotel.map((hotel, index) => {
+    const result = orderedListHotel.map((hotel) => {
       const dataPrice = listPriceHotel?.find((item) => item.id === hotel.id);
-      return <HotelCard info={hotel} key={index} priceInfo={dataPrice} />;
+      return <HotelCard info={hotel} key={hotel.name} priceInfo={dataPrice} />;
     });
 
     return result;
-  };
+  }, [isFetched, listInfoHotel, listPriceHotel, orderTag.direction, orderTag.key]);
 
   return (
     <div style={{ overflowX: 'hidden' }}>
