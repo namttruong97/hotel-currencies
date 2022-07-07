@@ -12,7 +12,30 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@next/next/no-page-custom-font": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "prettier/prettier": [
+      "warn",
+      {
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "tabWidth": 2,
+        "semi": true,
+        "printWidth": 100,
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "endOfLine": "auto",
+        "importOrder": [
+          "^react$",
+          "^[a-z\\-/]*$",
+          "^components/(.*)$",
+          "^services/(.*)$",
+          "^store/(.*)$",
+          "^model/(.*)$",
+          "^mock/(.*)$",
+          "^[./]"
+        ]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
