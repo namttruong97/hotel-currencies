@@ -49,7 +49,10 @@ const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
   };
 
   const shouldShowMostExpensive = (price: number, maxPrice: number) => {
-    if (maxPrice === 0 || getRoundingNumber(price) >= getRoundingNumber(maxPrice)) {
+    if (
+      maxPrice === 0 ||
+      parseInt(getRoundingNumber(price)) >= parseInt(getRoundingNumber(maxPrice))
+    ) {
       return false;
     }
     return true;
