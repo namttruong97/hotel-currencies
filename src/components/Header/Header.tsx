@@ -1,11 +1,12 @@
 import { GlobalOutlined, HomeOutlined } from '@ant-design/icons';
-import { DEFAULT_CURRENCY, currencyAtom } from 'store/currencyAtom';
 
 import { useEffect } from 'react';
 
 import { Col, Row, Select, Space, Typography } from 'antd';
 import { useAtom } from 'jotai';
 import lodash from 'lodash';
+
+import { DEFAULT_CURRENCY, currencyAtom } from 'store/currencyAtom';
 
 const { Option } = Select;
 const DATA_CURRENCIES = ['USD', 'SGD', 'CNY', 'KRW'];
@@ -45,7 +46,7 @@ const Header = () => {
         <Col span={8}>
           <Space align="center" style={{ cursor: 'pointer' }}>
             <HomeOutlined style={{ fontSize: 21 }} />
-            <Typography.Title level={4} style={{ marginBottom: 0 }}>
+            <Typography.Title level={4} style={{ marginBottom: 0 }} data-testid="Header__title">
               Hotel Currencies
             </Typography.Title>
           </Space>
@@ -53,14 +54,22 @@ const Header = () => {
 
         <Col span={10} offset={6}>
           <Space size={55} style={{ width: '100%', justifyContent: 'right' }}>
-            <Typography.Text type="secondary">About</Typography.Text>
-            <Typography.Text type="secondary">Support</Typography.Text>
-            <Typography.Text type="secondary">
+            <Typography.Text type="secondary" data-testid="Header__item">
+              About{' '}
+            </Typography.Text>
+            <Typography.Text type="secondary" data-testid="Header__item">
+              Support
+            </Typography.Text>
+            <Typography.Text type="secondary" data-testid="Header__item">
               <GlobalOutlined style={{ marginRight: 5 }} />
               Language
             </Typography.Text>
 
-            <Select value={currency} onChange={handleChangeCurrencies}>
+            <Select
+              value={currency}
+              onChange={handleChangeCurrencies}
+              data-testid="Header__combobox"
+            >
               {DATA_CURRENCIES.map((item) => (
                 <Option key={item} value={item}>
                   {item}

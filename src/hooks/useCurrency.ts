@@ -1,6 +1,7 @@
-import { currencyAtom } from 'store/currencyAtom';
-
+// This hook helps format currency follow by localization
 import { useAtom } from 'jotai';
+
+import { currencyAtom } from 'store/currencyAtom';
 
 const roundingCurrency = (value: number, currency: string): string => {
   const zeroFixedCurrency = ['USD', 'SGD'];

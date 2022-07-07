@@ -1,7 +1,7 @@
-import { OrderTagType, orderTagAtom } from 'store/orderTagAtom';
-
 import { Tag } from 'antd';
 import { useAtom } from 'jotai';
+
+import { OrderTagType, orderTagAtom } from 'store/orderTagAtom';
 
 const { CheckableTag } = Tag;
 

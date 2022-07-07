@@ -1,8 +1,4 @@
 import backgroundImage from 'assets/background.jpeg';
-import { HotelDataType } from 'model/hotel.model';
-import { PriceDataType } from 'model/price.model';
-import { currencyAtom } from 'store/currencyAtom';
-import { orderTagAtom } from 'store/orderTagAtom';
 
 import { useCallback } from 'react';
 
@@ -16,6 +12,12 @@ import { getListInfoHotel, getListPriceHotel } from 'services/hotel';
 import Header from 'components/Header/Header';
 import HotelCard from 'components/HotelCard/HotelCard';
 import TagOrder from 'components/TagOrder/TagOrder';
+
+import { currencyAtom } from 'store/currencyAtom';
+import { orderTagAtom } from 'store/orderTagAtom';
+
+import { HotelDataType } from 'model/hotel.model';
+import { PriceDataType } from 'model/price.model';
 
 const CompetitivenessHotel = () => {
   const [orderTag] = useAtom(orderTagAtom);
@@ -34,7 +36,7 @@ const CompetitivenessHotel = () => {
     () => getListPriceHotel(currency),
     {
       refetchOnWindowFocus: false,
-    },
+    }
   );
 
   const renderListHotel = useCallback(() => {
@@ -45,13 +47,13 @@ const CompetitivenessHotel = () => {
     // Include field price into hotel info to support sorting
     const mappedListHotel = listInfoHotel?.map((item) => {
       const dataPrice = listPriceHotel?.find((price) => item.id === price.id);
-      return { ...item, price: dataPrice?.price };
+      return { ...item, price: dataPrice?.price || 0 };
     });
 
     const orderedListHotel = lodash.orderBy(
       mappedListHotel,
       `${orderTag.key}`,
-      `${orderTag.direction}`,
+      `${orderTag.direction}`
     );
 
     const result = orderedListHotel.map((hotel) => {

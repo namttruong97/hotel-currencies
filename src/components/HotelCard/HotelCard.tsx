@@ -1,32 +1,24 @@
 import useCurrency from 'hooks/useCurrency';
-import { HotelDataType } from 'model/hotel.model';
-import { PriceDataType } from 'model/price.model';
 
 import { Card, Col, Rate, Row, Tag, Tooltip } from 'antd';
 import lodash from 'lodash';
 import Image from 'next/image';
 import sanitizeHtml from 'sanitize-html';
 import { MAX_LENGTH_DESCRIPTION } from 'utils/constant';
-import { getPercent } from 'utils/helper';
+import { getMostExpensivePrice, getPercent } from 'utils/helper';
 
 import ListOtherHotel from 'components/ListOtherHotel/ListOtherHotel';
 
-interface IHotelCard {
+import { HotelDataType } from 'model/hotel.model';
+import { PriceDataType } from 'model/price.model';
+
+export interface IHotelCard {
   info: HotelDataType;
   priceInfo?: PriceDataType;
 }
 
 const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
   const { getRounding, getRoundingNumber } = useCurrency();
-  const getMostExpensivePrice = (): number => {
-    const dataCompetitors = lodash.get(priceInfo, 'competitors', 0);
-    if (typeof dataCompetitors === 'number') {
-      return 0;
-    }
-
-    const result = lodash.max(Object.values(dataCompetitors));
-    return result || 0;
-  };
 
   const renderTaxesIncluded = () => {
     const dataTaxes = lodash.get(priceInfo, 'taxes_and_fees', null);
@@ -68,12 +60,13 @@ const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
       return <div style={{ color: 'red', textAlign: 'right' }}>Rates unavailable</div>;
     }
 
-    const mostExpensivePrice = getMostExpensivePrice();
+    const mostExpensivePrice = getMostExpensivePrice(priceInfo);
     const percentDiscount = getPercent(priceInfo.price, mostExpensivePrice);
 
     return (
       <div style={{ textAlign: 'right' }}>
         <div
+          data-testid="HotelCard__maxPrice"
           style={{
             fontSize: 13,
             textDecoration: 'line-through',
@@ -83,6 +76,7 @@ const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
           }}
         >
           <div
+            data-testid="HotelCard__discount"
             style={{
               visibility: percentDiscount !== 0 ? 'visible' : 'hidden',
             }}
@@ -127,17 +121,22 @@ const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
             width={300}
             objectFit="cover"
             style={{ borderRadius: 8 }}
+            data-testid="HotelCard__thumbnail"
           />
         </Col>
         <Col span={18} style={{ paddingLeft: 16 }}>
           <Row>
             <Col flex="1 0 75%" style={{ marginBottom: 16 }}>
-              <div style={{ color: '#0071c2', marginBottom: 0, lineHeight: 1, fontWeight: 700 }}>
+              <div
+                style={{ color: '#0071c2', marginBottom: 0, lineHeight: 1, fontWeight: 700 }}
+                data-testid="HotelCard__name"
+              >
                 {info.name} <Rate disabled defaultValue={info.stars} />
               </div>
               <span style={{ fontSize: 12, color: 'grey' }}>{info.address}</span>
             </Col>
             <Col
+              data-testid="HotelCard__rating"
               style={{
                 height: 'fit-content',
                 backgroundColor: '#0450B1',
@@ -155,6 +154,7 @@ const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
           <Row>
             <Col span={18}>
               <div
+                data-testid="HotelCard__description"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHtml(info.description.slice(0, MAX_LENGTH_DESCRIPTION) + '...'),
                 }}

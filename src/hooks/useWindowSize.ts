@@ -1,3 +1,4 @@
+// This hook helps get/set when size of screen changed
 import { useEffect, useState } from 'react';
 
 //  BREAK POINT FROM ANT DESIGN

@@ -26,7 +26,7 @@ const ListOtherHotel: React.FC<IListOtherHotel> = ({ dataSource }) => {
   const orderData = lodash.orderBy(mappedData, 'value', 'desc');
   return (
     <>
-      <Divider orientation="left">Another choice</Divider>
+      <Divider orientation="left">Others choice</Divider>
       <List
         itemLayout="horizontal"
         dataSource={orderData}
