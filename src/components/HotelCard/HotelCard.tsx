@@ -81,7 +81,7 @@ const HotelCard: React.FC<IHotelCard> = ({ info, priceInfo }) => {
           <div
             data-testid="HotelCard__discount"
             style={{
-              visibility: percentDiscount !== 0 ? 'visible' : 'hidden',
+              visibility: percentDiscount > 0 ? 'visible' : 'hidden',
             }}
           >
             <Tag color="red" style={{ margin: 0, fontSize: 12 }}>
